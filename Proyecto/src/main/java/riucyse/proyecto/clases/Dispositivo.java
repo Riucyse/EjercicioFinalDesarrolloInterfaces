@@ -73,4 +73,9 @@ public class Dispositivo {
     public void setAtributo(String atributo) {
         this.atributo = atributo;
     }
+
+    public String toString(){
+        return this.atributo + " modelo " + this.modelo + " de la marca " + this.marca + " con precio " + this.precio +
+                " y con fecha de compra " + this.fechaCompra;
+    }
 }
