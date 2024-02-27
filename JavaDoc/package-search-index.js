@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"riucyse.proyecto","l":"riucyse.proyecto"},{"m":"riucyse.proyecto","l":"riucyse.proyecto.clases"}];updateSearchResults();

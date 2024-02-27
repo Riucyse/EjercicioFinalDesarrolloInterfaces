@@ -12,6 +12,11 @@ import riucyse.proyecto.clases.Ventas;
 
 import java.time.LocalDate;
 
+/**
+ * Es la clase controlador de la vista principal del programa
+ * @author Enric Gonzalez
+ * @version 1.0
+ */
 public class VentanaController {
 
     public TableView<Dispositivo> tableDatos;
@@ -35,6 +40,9 @@ public class VentanaController {
     private Ventas ventas;
     private Dispositivo dispositivoSeleccionado;
 
+    /**
+     * La clase que arranca tan solo abre la ventana, pone todo a punto
+     */
     public void initialize(){
         columnaIdentificador.setCellValueFactory(new PropertyValueFactory<Dispositivo, String>("identificador"));
         columnaFecha.setCellValueFactory(new PropertyValueFactory<Dispositivo, LocalDate>("fechaCompra"));
@@ -52,6 +60,12 @@ public class VentanaController {
         reiniciarDispositivoSeleccionado();
     }
 
+    /**
+     * Clase que se activa cuando pulsas el boton de añadir.
+     * Comprueba que estan todos los campos rellenados y que sean correctos, despues de eso revisa que no haya un
+     * dispositivo con el mismo identificador.
+     * En caso de que este todo correcto, se añadira el dispositivo a la lista
+     */
     public void pulsarAnadir(){
         if(fieldIdentificador.getText().isEmpty()){
             textoError.setText("Falta el identificador por rellenar");
@@ -74,7 +88,9 @@ public class VentanaController {
                 LocalDate fecha = dateFecha.getValue();
                 Ventas ventasTableDatos = new Ventas(tableDatos.getItems());
                 if(ventasTableDatos.existeDispositivo(identificador)){
-                    textoError.setText("Ya existe este identificador, pulsa modificar si quiere modificarlo");
+                    textoError.setText("Ya existe este identificador, pulsa el dispositivo en la lista y modificar si" +
+                            " quiere modificarlo");
+                    reiniciarDispositivoSeleccionado();
                 } else{
                     Dispositivo nuevoDispositivo = new Dispositivo(identificador, fecha, precio, comboBoxTipo.getValue().toString(),
                             fieldMarca.getText(), fieldModelo.getText());
@@ -87,11 +103,21 @@ public class VentanaController {
         }
     }
 
+    /**
+     * Metodo que crea un nuevo .txt con los dispositivos de la lista
+     * @see Ventas#imprimirTxt()
+     */
     public void pulsarImprimir(){
         Ventas ventasAImprimir = new Ventas(tableDatos.getItems());
         ventasAImprimir.imprimirTxt();
     }
 
+    /**
+     * Se activa cuando pulsas un elemento en la TableView, y te pone los datos del Dispositivo en los campos a editar
+     *
+     * @see Dispositivo
+     * @param mouseEvent Evento generico de Javafx
+     */
     public void pulsarElementoTable(MouseEvent mouseEvent) {
         dispositivoSeleccionado = tableDatos.getSelectionModel().getSelectedItem();
         if(dispositivoSeleccionado != null){
@@ -104,6 +130,12 @@ public class VentanaController {
         }
     }
 
+    /**
+     * Quita el Dispositivo seleccionado, si es que habia un Dispositivo seleccionado
+     *
+     * @see Dispositivo
+     * @param actionEvent Accion generica de Javafx
+     */
     public void pulsarQuitar(ActionEvent actionEvent) {
         if(dispositivoSeleccionado != null){
             ventas.bajaDispositivo(dispositivoSeleccionado.getIdentificador());
@@ -113,6 +145,12 @@ public class VentanaController {
     }
 
 
+    /**
+     * Cambia el identificador del Dispositivo seleccionado
+     *
+     * @see Dispositivo
+     * @param actionEvent Accion generica de Javafx
+     */
     public void cambiarIdentificador(KeyEvent actionEvent) {
         try{
             int nuevoIdentificador = Integer.parseInt(fieldIdentificador.getText());
@@ -124,11 +162,23 @@ public class VentanaController {
         }
     }
 
+    /**
+     * Cambia la fecha del Dispositivo seleccionado
+     *
+     * @see Dispositivo
+     * @param actionEvent Accion generica de Javafx
+     */
     public void cambiarFecha(ActionEvent actionEvent) {
         dispositivoSeleccionado.setFechaCompra(dateFecha.getValue());
         tableDatos.refresh();
     }
 
+    /**
+     * Cambia el precio del dispositivo seleccionado
+     *
+     * @see Dispositivo
+     * @param actionEvent Accion generica de Javafx
+     */
     public void cambiarPrecio(KeyEvent actionEvent) {
         try{
             double nuevoPrecio = Double.parseDouble(fieldPrecio.getText());
@@ -140,21 +190,44 @@ public class VentanaController {
         }
     }
 
+    /**
+     * Cambia el tipo de dispositivo del Dispositivo seleccionado
+     *
+     * @see Dispositivo
+     * @param actionEvent Accion generica de Javafx
+     */
     public void cambiarTipo(ActionEvent actionEvent) {
         dispositivoSeleccionado.setAtributo(comboBoxTipo.getValue().toString());
         tableDatos.refresh();
     }
 
+    /**
+     * Cambia la marca del Dispositivo seleccionado
+     *
+     * @see Dispositivo
+     * @param actionEvent Accion generica de Javafx
+     */
     public void cambiarMarca(KeyEvent actionEvent) {
         dispositivoSeleccionado.setMarca(fieldMarca.getText());
         tableDatos.refresh();
     }
 
+    /**
+     * Cambia el modelo del Dispositivo seleccionado
+     *
+     * @see Dispositivo
+     * @param actionEvent Accion generica de Javafx
+     */
     public void cambiarModelo(KeyEvent actionEvent) {
         dispositivoSeleccionado.setModelo(fieldModelo.getText());
         tableDatos.refresh();
     }
 
+    /**
+     * Reinicia y desvincula todos los campos a la hora de crear o editar un nuevo dispositivo
+     *
+     * @see Dispositivo
+     */
     private void reiniciarDispositivoSeleccionado(){
         dispositivoSeleccionado = new Dispositivo(0, null, 0, "", "", "");
         fieldIdentificador.setText("");
@@ -163,6 +236,12 @@ public class VentanaController {
         fieldModelo.setText("");
     }
 
+    /**
+     * Deselecciona el Dispositivo seleccionado del TableView
+     *
+     * @see Dispositivo
+     * @param actionEvent Accion generica de Javafx
+     */
     public void pulsarDeseleccionar(ActionEvent actionEvent) {
         reiniciarDispositivoSeleccionado();
     }
