@@ -1,5 +1,8 @@
 package riucyse.proyecto.clases;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,5 +40,19 @@ public class Ventas {
 
     public void setVentas(List<Dispositivo> stock) {
         this.ventas = stock;
+    }
+
+    public void imprimirTxt(){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("VentasDispositivos"))){
+            StringBuilder str = new StringBuilder();
+            str.append("Lista de objetos vendidos:");
+            ventas.forEach(Dispositivo ->{
+                str.append(Dispositivo.toString());
+                str.append("\n");
+            });
+            bufferedWriter.write(str.toString());
+        } catch(IOException e){
+            System.out.println(e);
+        }
     }
 }
