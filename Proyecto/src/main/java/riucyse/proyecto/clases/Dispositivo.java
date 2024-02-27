@@ -26,6 +26,16 @@ public class Dispositivo {
         this.modelo = nuevoModelo;
     }
 
+    public Dispositivo(int nuevoIdentificador, LocalDate nuevaFechaDeCompra, double nuevoPrecio, String nuevoSelectorAtributo,
+                       String nuevaMarca, String nuevoModelo){
+        this.identificador = nuevoIdentificador;
+        this.fechaCompra = nuevaFechaDeCompra;
+        this.precio = nuevoPrecio;
+        this.atributo = nuevoSelectorAtributo;
+        this.marca = nuevaMarca;
+        this.modelo = nuevoModelo;
+    }
+
     public int getIdentificador() {
         return identificador;
     }

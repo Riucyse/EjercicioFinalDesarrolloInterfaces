@@ -5,4 +5,6 @@ module riucyse.proyecto {
                             
     opens riucyse.proyecto to javafx.fxml;
     exports riucyse.proyecto;
+    opens riucyse.proyecto.clases;
+    exports riucyse.proyecto.clases;
 }

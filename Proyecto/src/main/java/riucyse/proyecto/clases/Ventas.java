@@ -34,6 +34,15 @@ public class Ventas {
         }
     }
 
+    public boolean existeDispositivo(int idDeDispositivo){
+        List<Dispositivo> aRevisar = ventas.stream().filter(Dispositivo -> Dispositivo.getIdentificador() == idDeDispositivo).collect(Collectors.toList());
+        if(aRevisar.isEmpty()){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public List<Dispositivo> getVentas() {
         return ventas;
     }
@@ -45,7 +54,7 @@ public class Ventas {
     public void imprimirTxt(){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("VentasDispositivos"))){
             StringBuilder str = new StringBuilder();
-            str.append("Lista de objetos vendidos:");
+            str.append("Lista de objetos vendidos:\n");
             ventas.forEach(Dispositivo ->{
                 str.append(Dispositivo.toString());
                 str.append("\n");
